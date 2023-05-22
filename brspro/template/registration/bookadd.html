@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    {% extends 'registration/base.html' %}
+    {% block content %}
+    {% load static %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}bookform{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/bookadd.css' %}">
+    </head>
+    <body onload="mess()">
+        {% if messages %}
+        {% for message in messages %}
+        <script>
+            function mess(){
+            alert("{{message}}");
+            }
+        </script>
+        {% endfor %}
+        {% endif %}
+    <style>
+        .banner{
+            background-image: url("{% static 'images/back.jpg' %}"); 
+        }
+    </style>
+    <div class="testbox">
+    <form method="post" action="/bookadd/{{id}}" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="banner">
+      </div>
+      <br/>
+      <fieldset>
+        <legend>Book Form</legend>
+        <div class="colums">
+          <div class="item">
+            <label for="districtname">Book Name<span>*</span></label><br>
+            {{form.bookname}}
+          </div>
+          <div class="item">
+            <label for="nitrogen">Book Author<span>*</span></label><br>
+            {{form.bookauthor}}
+          </div>
+          <div class="item">
+            <label for="phosphorus">Review Author<span>*</span></label><br>
+            {{form.reviewauthor}}
+          </div>
+          <div class="item">
+            <label for="potassium">Book Type<span>*</span></label><br>
+            {{form.booktype}}
+          </div>
+          <div class="item">
+            <label for="temperature">Book Image<span>*</span></label><br>
+            {{form.bookimg}}
+          </div>
+          <div class="item">
+            <label for="humidity">Book File<span>*</span></label><br>
+            {{form.bookfile}}
+          </div>
+      </fieldset>
+      <br/>
+      <div class="btn-block">
+      <button type="order">Submit</button>
+      <button type="reset">Reset</button>
+      </div>
+    </form>
+    </div>
+  </body>
+  {% endblock %}
+</html>

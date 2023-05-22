@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    {% extends 'registration/base.html' %}
+    {% block content %}
+    {% load static %}
+    <head>
+        <title>{% block title %} Book reviews {% endblock %}</title>
+    </head>    
+    <body onload="mess()">
+      {% if messages %}
+      {% for message in messages %}
+      <script>
+        function mess(){
+        alert("{{message}}");
+        }
+      </script>
+      {% endfor %}
+      {% endif %}
+      <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px; 
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      
+      </style>
+      
+        <h1 class="text-light"><span>Books Collections</span><a href="{% url 'logout' %}" style="margin-left:70%;text-decoration: none;font-size :70%;">Logout</a></h1>
+        <form method="GET" action="{% url 'searchbook'%}" >
+            <input type="search" name="search" placeholder="name or author or type"> 
+            <button type="submit"> Search </button> 
+            <a href="{% url 'bookreviews' %}"><input type="button" value="All Reviews" style="margin-left: 30px;"></a>
+        </form><br>
+        <table>
+        <tbody>
+               <tr>
+                 <th>Image</th>
+                 <th>BookName</th>
+                 <th>Bookauthor</th>
+                 <th>Reviewauthor</th>
+                 <th>Booktype</th>
+                 <th>Sourcefile</th>
+               </tr>
+               {% if book %}
+                  {% for book in book  %}
+                    <tr>
+                      <td> <img src="{{ book.bookimg.url }}" alt="{{ book.bookimg }}" height="100" width="100"></td>
+                      <td>{{ book.bookname }}</td>
+                      <td>{{ book.bookauthor }}</td>
+                      <td>{{ book.reviewauthor }}</td>
+                      <td>{{ book.booktype }}</td>
+                      <td> <audio controls controlsList="nodownload">
+                      <source src= "{{book.bookfile.url}}" type="audio/mpeg">
+                      </audio></td>
+                    </tr>
+                  {% endfor %}
+               {% endif %}
+
+               {% if results %}
+                  {% for book in results  %}
+                    <tr>
+                      <td> <img src="{{ book.bookimg.url }}" alt="{{ book.bookimg }}" height="100" width="100"></td>
+                      <td>{{ book.bookname }}</td>
+                      <td>{{ book.bookauthor }}</td>
+                      <td>{{ book.reviewauthor }}</td>
+                      <td>{{ book.booktype }}</td>
+                      <td> <audio controls controlsList="nodownload">
+                      <source src= "{{book.bookfile.url}}" type="audio/mpeg">
+                      </audio></td>
+                    </tr>
+                  {% endfor %}
+               {% endif %}
+       </tbody>
+     </table>
+   </body>
+   {% endblock %}
+</html>
